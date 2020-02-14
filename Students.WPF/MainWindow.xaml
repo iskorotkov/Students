@@ -32,5 +32,48 @@
                 <MenuItem Header="Delete"/>
             </MenuItem>
         </Menu>
+        
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Text="First name: " Grid.Row="0" Grid.Column="0"/>
+                <TextBox Name="FirstNameBox" Grid.Row="0" Grid.Column="1" />
+                
+                <TextBlock Text="Second name: " Grid.Row="1" Grid.Column="0" />
+                <TextBox Name="SecondNameBox" Grid.Row="1" Grid.Column="1" />
+                
+                <TextBlock Text="Faculty: " Grid.Row="2" Grid.Column="0" />
+                <TextBox Name="FacultyBox" Grid.Row="2" Grid.Column="1" />
+            </Grid>
+            
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Previous"/>
+                <Button Content="Next"/>
+            </StackPanel>
+            
+            <TextBlock Text="Search"/>
+            
+            <StackPanel Orientation="Horizontal">
+                <ComboBox>
+                    <ComboBoxItem Content="First name"/>
+                    <ComboBoxItem Content="Second name"/>
+                    <ComboBoxItem Content="Faculty"/>
+                </ComboBox>
+                
+                <TextBlock Text=" = "/>
+                
+                <TextBox Name="SearchConditionBox"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
