@@ -7,6 +7,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.Row="0" Grid.Column="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Save..."/>
+                <MenuItem Header="Load..."/>
+            </MenuItem>
+            
+            <MenuItem Header="View">
+                <MenuItem Header="Next"/>
+                <MenuItem Header="Previous"/>
+            </MenuItem>
+            
+            <MenuItem Header="Students">
+                <MenuItem Header="Add"/>
+                <MenuItem Header="Delete"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>
