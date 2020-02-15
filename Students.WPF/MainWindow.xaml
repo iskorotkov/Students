@@ -19,18 +19,18 @@
         <Menu Grid.Row="0" Grid.Column="0">
             <MenuItem Header="File">
                 <MenuItem Header="New list" Click="NewList_OnClick" />
-                <MenuItem Header="Save list" Click="Save_OnClick" />
-                <MenuItem Header="Load list" />
+                <MenuItem Header="Save" Click="Save_OnClick" />
+                <MenuItem Header="Load" />
             </MenuItem>
 
             <MenuItem Header="View">
-                <MenuItem Header="Next student" />
-                <MenuItem Header="Previous student" />
+                <MenuItem Header="Next" />
+                <MenuItem Header="Previous" />
             </MenuItem>
 
             <MenuItem Header="Students">
-                <MenuItem Header="Add student" Click="Add_OnClick" />
-                <MenuItem Header="Delete student" />
+                <MenuItem Header="Add" Click="Add_OnClick" />
+                <MenuItem Header="Delete" />
             </MenuItem>
         </Menu>
 
@@ -79,7 +79,7 @@
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
