@@ -30,7 +30,7 @@
 
             <MenuItem Header="Students">
                 <MenuItem Header="Add" Click="Add_OnClick" />
-                <MenuItem Header="Delete" />
+                <MenuItem IsEnabled="False" Name="RemoveMenuButton" Header="Remove" Click="Remove_OnClick"/>
             </MenuItem>
         </Menu>
 

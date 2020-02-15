@@ -29,12 +29,14 @@ namespace Students.WPF
         {
             Iterator.Clear();
             UpdateNavButtonsState();
+            UpdateRemoveButtonState();
         }
 
         private void Add_OnClick(object sender, RoutedEventArgs e)
         {
             Iterator.New();
             UpdateNavButtonsState();
+            UpdateRemoveButtonState();
         }
 
         private void UpdateStudentFaculty()
@@ -101,6 +103,7 @@ namespace Students.WPF
             var file = dialog.FileName;
             Iterator.Students = Serializer.Deserialize(file);
             UpdateNavButtonsState();
+            UpdateRemoveButtonState();
         }
 
         private void Next_OnClick(object sender, RoutedEventArgs e)
@@ -121,6 +124,18 @@ namespace Students.WPF
             NextStudentMenuButton.IsEnabled = Iterator.CanSelectNext;
             PreviousStudentButton.IsEnabled = Iterator.CanSelectPrevious;
             PreviousStudentMenuButton.IsEnabled = Iterator.CanSelectPrevious;
+        }
+
+        private void Remove_OnClick(object sender, RoutedEventArgs e)
+        {
+            Iterator.Remove();
+            UpdateNavButtonsState();
+            UpdateRemoveButtonState();
+        }
+
+        private void UpdateRemoveButtonState()
+        {
+            RemoveMenuButton.IsEnabled = Iterator.IsSelected;
         }
     }
 }

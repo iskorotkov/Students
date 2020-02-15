@@ -17,18 +17,11 @@ namespace Students.WPF
                 _students = value;
                 Index = _students.Any() ? 0 : (int?) null;
             }
-        } 
+        }
 
         public bool IsSelected => Index != null;
-        public Student? Selected
-        {
-            get
-            {
-                if (!Index.HasValue || !Students.Any())
-                    return null;
-                return Students[Index.Value];
-            }
-        }
+
+        public Student? Selected => !Index.HasValue ? null : Students[Index.Value];
 
         private int? Index
         {
@@ -58,18 +51,29 @@ namespace Students.WPF
 
         public void Next()
         {
-            if (Index >= Students.Count - 1)
-                return;
             if (!Index.HasValue)
+                return;
+            if (Index >= Students.Count - 1)
                 return;
             Index++;
         }
 
+        public void Remove()
+        {
+            if (!Index.HasValue)
+                return;
+            Students.RemoveAt(Index.Value);
+            if (!Students.Any())
+                Index = null;
+            else
+                Index = Index >= Students.Count ? Students.Count - 1 : Index;
+        }
+
         public void Previous()
         {
-            if (Index <= 0)
-                return;
             if (!Index.HasValue)
+                return;
+            if (Index <= 0)
                 return;
             Index--;
         }
