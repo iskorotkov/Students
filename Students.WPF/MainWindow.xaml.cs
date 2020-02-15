@@ -28,11 +28,13 @@ namespace Students.WPF
         private void NewList_OnClick(object sender, RoutedEventArgs e)
         {
             Iterator.Clear();
+            UpdateNavButtonsState();
         }
 
         private void Add_OnClick(object sender, RoutedEventArgs e)
         {
             Iterator.New();
+            UpdateNavButtonsState();
         }
 
         private void UpdateStudentFaculty()
@@ -98,16 +100,27 @@ namespace Students.WPF
                 return;
             var file = dialog.FileName;
             Iterator.Students = Serializer.Deserialize(file);
+            UpdateNavButtonsState();
         }
 
         private void Next_OnClick(object sender, RoutedEventArgs e)
         {
             Iterator.Next();
+            UpdateNavButtonsState();
         }
 
         private void Previous_OnClick(object sender, RoutedEventArgs e)
         {
             Iterator.Previous();
+            UpdateNavButtonsState();
+        }
+
+        private void UpdateNavButtonsState()
+        {
+            NextStudentButton.IsEnabled = Iterator.CanSelectNext;
+            NextStudentMenuButton.IsEnabled = Iterator.CanSelectNext;
+            PreviousStudentButton.IsEnabled = Iterator.CanSelectPrevious;
+            PreviousStudentMenuButton.IsEnabled = Iterator.CanSelectPrevious;
         }
     }
 }

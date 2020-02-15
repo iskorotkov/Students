@@ -15,4 +15,9 @@
     <SecondName>vwdssdvds---</SecondName>
     <Faculty>vsdvsdvdsvsd</Faculty>
   </Student>
+  <Student>
+    <FirstName>ee</FirstName>
+    <SecondName />
+    <Faculty>ee</Faculty>
+  </Student>
 </ArrayOfStudent>

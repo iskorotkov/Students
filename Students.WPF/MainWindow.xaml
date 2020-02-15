@@ -24,8 +24,8 @@
             </MenuItem>
 
             <MenuItem Header="View">
-                <MenuItem Header="Next" Click="Next_OnClick" />
-                <MenuItem Header="Previous" Click="Previous_OnClick" />
+                <MenuItem IsEnabled="False" Header="Next" Name="NextStudentMenuButton" Click="Next_OnClick" />
+                <MenuItem IsEnabled="False" Header="Previous" Name="PreviousStudentMenuButton" Click="Previous_OnClick" />
             </MenuItem>
 
             <MenuItem Header="Students">
@@ -55,13 +55,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="First name: " Grid.Row="0" Grid.Column="0" />
-                <TextBox Name="FirstNameBox" Grid.Row="0" Grid.Column="1" />
+                <TextBox IsEnabled="False" Name="FirstNameBox" Grid.Row="0" Grid.Column="1" />
 
                 <TextBlock Text="Second name: " Grid.Row="1" Grid.Column="0" />
-                <TextBox Name="SecondNameBox" Grid.Row="1" Grid.Column="1" />
+                <TextBox IsEnabled="False" Name="SecondNameBox" Grid.Row="1" Grid.Column="1" />
 
                 <TextBlock Text="Faculty: " Grid.Row="2" Grid.Column="0" />
-                <TextBox Name="FacultyBox" Grid.Row="2" Grid.Column="1" />
+                <TextBox IsEnabled="False" Name="FacultyBox" Grid.Row="2" Grid.Column="1" />
             </Grid>
 
             <Grid Grid.Row="1">
@@ -70,8 +70,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Content="Next" Click="Next_OnClick" />
-                <Button Content="Previous" Grid.Column="1" Click="Previous_OnClick" />
+                <Button IsEnabled="False" Content="Previous" Name="PreviousStudentButton" Click="Previous_OnClick" />
+                <Button IsEnabled="False" Content="Next" Name="NextStudentButton" Grid.Column="1" Click="Next_OnClick" />
             </Grid>
 
             <TextBlock Text="Search" Grid.Row="2" />

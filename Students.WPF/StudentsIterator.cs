@@ -43,6 +43,9 @@ namespace Students.WPF
             }
         }
 
+        public bool CanSelectNext => Index != null && Index.Value < Students.Count - 1;
+        public bool CanSelectPrevious => Index != null && Index.Value > 0;
+
         public event Action<Student> StudentSelected;
         public event Action NoStudentSelected;
 
