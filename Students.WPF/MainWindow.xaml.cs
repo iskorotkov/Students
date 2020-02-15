@@ -30,7 +30,7 @@ namespace Students.WPF
         }
 
         private StudentsSerializer Serializer { get; } = new StudentsSerializer();
-        private List<Student> Students { get; set; }= new List<Student>();
+        private List<Student> Students { get; set; } = new List<Student>();
 
         private Student SelectedStudent
         {
@@ -45,6 +45,8 @@ namespace Students.WPF
             }
         }
 
+        private int? SelectedStudentIndex { get; set; } = null;
+
         public event Action<Student> StudentSelected;
         public event Action NoStudentsSelected;
 
@@ -52,12 +54,14 @@ namespace Students.WPF
         {
             Students.Clear();
             SelectedStudent = null;
+            SelectedStudentIndex = null;
         }
 
         private void Add_OnClick(object sender, RoutedEventArgs e)
         {
             SelectedStudent = new Student();
             Students.Add(SelectedStudent);
+            SelectedStudentIndex = Students.Count - 1;
         }
 
         private void UpdateStudentFaculty()
@@ -126,8 +130,27 @@ namespace Students.WPF
                 return;
             var file = dialog.FileName;
             Students = Serializer.Deserialize(file);
-            if (Students.Any())
-                SelectedStudent = Students[0];
+            if (!Students.Any())
+                return;
+            SelectedStudent = Students[0];
+            SelectedStudentIndex = 0;
+        }
+
+        private void Next_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!SelectedStudentIndex.HasValue) return;
+            if (SelectedStudentIndex >= Students.Count - 1) return;
+            SelectedStudentIndex++;
+            SelectedStudent = Students[SelectedStudentIndex.Value];
+        }
+
+        private void Previous_OnClick(object sender, RoutedEventArgs e)
+        {
+            // ReSharper disable once ConvertIfStatementToSwitchStatement
+            if (!SelectedStudentIndex.HasValue) return;
+            if (SelectedStudentIndex == 0) return;
+            SelectedStudentIndex--;
+            SelectedStudent = Students[SelectedStudentIndex.Value];
         }
     }
 }
