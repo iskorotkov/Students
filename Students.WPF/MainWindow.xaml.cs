@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Win32;
 
 namespace Students.WPF
@@ -136,6 +138,28 @@ namespace Students.WPF
         private void UpdateRemoveButtonState()
         {
             RemoveMenuButton.IsEnabled = Iterator.IsSelected;
+        }
+
+        private void SearchConditionBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var query = SearchConditionBox.Text.Trim();
+            if (query.Length == 0)
+            {
+                Iterator.ClearFilter();
+            }
+            else
+            {
+                var pred = FilterComboBox.SelectedIndex switch
+                {
+                    0 => new Predicate<Student>(s => s.FirstName == query),
+                    1 => new Predicate<Student>(s => s.SecondName == query),
+                    2 => new Predicate<Student>(s => s.Faculty == query),
+                    _ => throw new InvalidOperationException()
+                };
+                Iterator.ApplyFilter(pred);
+            }
+            UpdateNavButtonsState();
+            UpdateRemoveButtonState();
         }
     }
 }

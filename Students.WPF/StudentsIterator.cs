@@ -9,14 +9,28 @@ namespace Students.WPF
         private int? _index;
         private List<Student> _students = new List<Student>();
 
+        private List<Student>? UnfilteredStudents { get; set; }
+
         public List<Student> Students
         {
             get => _students;
             set
             {
                 _students = value;
-                Index = _students.Any() ? 0 : (int?) null;
+                Index = _students.Any() ? 0 : (int?)null;
             }
+        }
+
+        public void ApplyFilter(Predicate<Student> predicate)
+        {
+            UnfilteredStudents ??= Students;
+            Students = UnfilteredStudents.Where(s => predicate(s)).ToList();
+        }
+
+        public void ClearFilter()
+        {
+            Students = UnfilteredStudents ?? Students;
+            UnfilteredStudents = null;
         }
 
         public bool IsSelected => Index != null;

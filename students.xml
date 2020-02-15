@@ -20,4 +20,14 @@
     <SecondName />
     <Faculty>ee</Faculty>
   </Student>
+  <Student>
+    <FirstName>ee</FirstName>
+    <SecondName>fwefw</SecondName>
+    <Faculty>fwefwe</Faculty>
+  </Student>
+  <Student>
+    <FirstName>fe</FirstName>
+    <SecondName>vdvsdvvdsv</SecondName>
+    <Faculty>vdvsdvvdsv</Faculty>
+  </Student>
 </ArrayOfStudent>
