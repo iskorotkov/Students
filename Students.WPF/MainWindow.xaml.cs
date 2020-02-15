@@ -13,12 +13,12 @@ namespace Students.WPF
         public MainWindow()
         {
             InitializeComponent();
-            FirstNameBox.TextChanged += (sender, args) => UpdateStudentFirstName();
-            SecondNameBox.TextChanged += (sender, args) => UpdateStudentSecondName();
-            FacultyBox.TextChanged += (sender, args) => UpdateStudentFaculty();
+            FirstNameBox.TextChanged += (_, __) => UpdateStudentFirstName();
+            SecondNameBox.TextChanged += (_, __) => UpdateStudentSecondName();
+            FacultyBox.TextChanged += (_, __) => UpdateStudentFaculty();
 
-            Iterator.StudentSelected += s => SetFormEnabled(true);
-            Iterator.StudentSelected += s => UpdateFormFields();
+            Iterator.StudentSelected += _ => SetFormEnabled(true);
+            Iterator.StudentSelected += _ => UpdateFormFields();
 
             Iterator.NoStudentSelected += ClearFormFields;
             Iterator.NoStudentSelected += () => SetFormEnabled(false);
@@ -43,19 +43,19 @@ namespace Students.WPF
 
         private void UpdateStudentFaculty()
         {
-            if (Iterator.IsSelected)
+            if (Iterator.Selected != null)
                 Iterator.Selected.Faculty = FacultyBox.Text;
         }
 
         private void UpdateStudentSecondName()
         {
-            if (Iterator.IsSelected)
+            if (Iterator.Selected != null)
                 Iterator.Selected.SecondName = SecondNameBox.Text;
         }
 
         private void UpdateStudentFirstName()
         {
-            if (Iterator.IsSelected)
+            if (Iterator.Selected != null)
                 Iterator.Selected.FirstName = FirstNameBox.Text;
         }
 
@@ -75,6 +75,8 @@ namespace Students.WPF
 
         private void UpdateFormFields()
         {
+            if (Iterator.Selected == null)
+                return;
             FirstNameBox.Text = Iterator.Selected.FirstName;
             SecondNameBox.Text = Iterator.Selected.SecondName;
             FacultyBox.Text = Iterator.Selected.Faculty;

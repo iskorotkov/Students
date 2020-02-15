@@ -17,7 +17,7 @@ namespace Students.WPF
             set
             {
                 _students = value;
-                Index = _students.Any() ? 0 : (int?)null;
+                Index = _students.Count > 0 ? 0 : (int?)null;
             }
         }
 
@@ -44,7 +44,7 @@ namespace Students.WPF
             {
                 _index = value;
                 if (value != null)
-                    StudentSelected?.Invoke(Selected);
+                    StudentSelected?.Invoke(Selected ?? throw new Exception());
                 else
                     NoStudentSelected?.Invoke();
             }
@@ -53,8 +53,8 @@ namespace Students.WPF
         public bool CanSelectNext => Index != null && Index.Value < Students.Count - 1;
         public bool CanSelectPrevious => Index != null && Index.Value > 0;
 
-        public event Action<Student> StudentSelected;
-        public event Action NoStudentSelected;
+        public event Action<Student>? StudentSelected;
+        public event Action? NoStudentSelected;
 
         public void New()
         {
@@ -77,7 +77,7 @@ namespace Students.WPF
             if (!Index.HasValue)
                 return;
             Students.RemoveAt(Index.Value);
-            if (!Students.Any())
+            if (Students.Count == 0)
                 Index = null;
             else
                 Index = Index >= Students.Count ? Students.Count - 1 : Index;
