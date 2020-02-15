@@ -20,7 +20,7 @@
             <MenuItem Header="File">
                 <MenuItem Header="New list" Click="NewList_OnClick" />
                 <MenuItem Header="Save" Click="Save_OnClick" />
-                <MenuItem Header="Load" />
+                <MenuItem Header="Load" Click="Load_OnClick"/>
             </MenuItem>
 
             <MenuItem Header="View">

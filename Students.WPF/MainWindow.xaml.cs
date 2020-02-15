@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
 
 namespace Students.WPF
 {
@@ -11,8 +12,8 @@ namespace Students.WPF
     {
         private List<Student> _students = new List<Student>();
         private Student _selectedStudent;
-        private StudentSerializer _serializer = new StudentSerializer();
-        
+        private StudentsSerializer _serializer = new StudentsSerializer();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -75,7 +76,26 @@ namespace Students.WPF
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
         {
-            _serializer.Serialize(_students);
+            var dialog = new SaveFileDialog
+            {
+                Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
+            };
+            var result = dialog.ShowDialog();
+            if (result == null || !result.Value) return;
+            var file = dialog.FileName;
+            _serializer.Serialize(file, _students);
+        }
+
+        private void Load_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
+            };
+            var result = dialog.ShowDialog();
+            if (result == null || !result.Value) return;
+            var file = dialog.FileName;
+            _students = _serializer.Deserialize(file);
         }
     }
 }

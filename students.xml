@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <ArrayOfStudent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Student>
-    <FirstName>Ivan</FirstName>
-    <SecondName>Korotkov</SecondName>
-    <Faculty>Math</Faculty>
+    <FirstName>gerg</FirstName>
+    <SecondName>gwrgw</SecondName>
+    <Faculty>rgwg</Faculty>
   </Student>
   <Student>
-    <FirstName>Oleg</FirstName>
-    <SecondName>Zuev</SecondName>
-    <Faculty>History</Faculty>
+    <FirstName>wgrw</FirstName>
+    <SecondName>grwgw</SecondName>
+    <Faculty>rwgrw</Faculty>
   </Student>
 </ArrayOfStudent>
