@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using Microsoft.Win32;
 
 namespace Students.WPF
@@ -11,8 +8,6 @@ namespace Students.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Student _selectedStudent;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -20,69 +15,42 @@ namespace Students.WPF
             SecondNameBox.TextChanged += (sender, args) => UpdateStudentSecondName();
             FacultyBox.TextChanged += (sender, args) => UpdateStudentFaculty();
 
-            StudentSelected += s => SetFormEnabled(true);
-            StudentSelected += s => UpdateFormFields();
+            Iterator.StudentSelected += s => SetFormEnabled(true);
+            Iterator.StudentSelected += s => UpdateFormFields();
 
-            NoStudentsSelected += ClearFormFields;
-            NoStudentsSelected += () => SetFormEnabled(false);
-
-            SelectedStudent = null;
+            Iterator.NoStudentSelected += ClearFormFields;
+            Iterator.NoStudentSelected += () => SetFormEnabled(false);
         }
 
         private StudentsSerializer Serializer { get; } = new StudentsSerializer();
-        private List<Student> Students { get; set; } = new List<Student>();
-
-        private Student SelectedStudent
-        {
-            get => _selectedStudent;
-            set
-            {
-                _selectedStudent = value;
-                if (value == null)
-                    NoStudentsSelected?.Invoke();
-                else
-                    StudentSelected?.Invoke(value);
-            }
-        }
-
-        private int? SelectedStudentIndex { get; set; } = null;
-
-        public event Action<Student> StudentSelected;
-        public event Action NoStudentsSelected;
+        private StudentsIterator Iterator { get; } = new StudentsIterator();
 
         private void NewList_OnClick(object sender, RoutedEventArgs e)
         {
-            Students.Clear();
-            SelectedStudent = null;
-            SelectedStudentIndex = null;
+            Iterator.Clear();
         }
 
         private void Add_OnClick(object sender, RoutedEventArgs e)
         {
-            SelectedStudent = new Student();
-            Students.Add(SelectedStudent);
-            SelectedStudentIndex = Students.Count - 1;
+            Iterator.New();
         }
 
         private void UpdateStudentFaculty()
         {
-            if (SelectedStudent == null)
-                return;
-            SelectedStudent.Faculty = FacultyBox.Text;
+            if (Iterator.IsSelected)
+                Iterator.Selected.Faculty = FacultyBox.Text;
         }
 
         private void UpdateStudentSecondName()
         {
-            if (SelectedStudent == null)
-                return;
-            SelectedStudent.SecondName = SecondNameBox.Text;
+            if (Iterator.IsSelected)
+                Iterator.Selected.SecondName = SecondNameBox.Text;
         }
 
         private void UpdateStudentFirstName()
         {
-            if (SelectedStudent == null)
-                return;
-            SelectedStudent.FirstName = FirstNameBox.Text;
+            if (Iterator.IsSelected)
+                Iterator.Selected.FirstName = FirstNameBox.Text;
         }
 
         private void SetFormEnabled(bool enabled)
@@ -101,9 +69,9 @@ namespace Students.WPF
 
         private void UpdateFormFields()
         {
-            FirstNameBox.Text = SelectedStudent.FirstName;
-            SecondNameBox.Text = SelectedStudent.SecondName;
-            FacultyBox.Text = SelectedStudent.Faculty;
+            FirstNameBox.Text = Iterator.Selected.FirstName;
+            SecondNameBox.Text = Iterator.Selected.SecondName;
+            FacultyBox.Text = Iterator.Selected.Faculty;
         }
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
@@ -116,7 +84,7 @@ namespace Students.WPF
             if (result == null || !result.Value)
                 return;
             var file = dialog.FileName;
-            Serializer.Serialize(file, Students);
+            Serializer.Serialize(file, Iterator.Students);
         }
 
         private void Load_OnClick(object sender, RoutedEventArgs e)
@@ -129,28 +97,17 @@ namespace Students.WPF
             if (result == null || !result.Value)
                 return;
             var file = dialog.FileName;
-            Students = Serializer.Deserialize(file);
-            if (!Students.Any())
-                return;
-            SelectedStudent = Students[0];
-            SelectedStudentIndex = 0;
+            Iterator.Students = Serializer.Deserialize(file);
         }
 
         private void Next_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!SelectedStudentIndex.HasValue) return;
-            if (SelectedStudentIndex >= Students.Count - 1) return;
-            SelectedStudentIndex++;
-            SelectedStudent = Students[SelectedStudentIndex.Value];
+            Iterator.Next();
         }
 
         private void Previous_OnClick(object sender, RoutedEventArgs e)
         {
-            // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if (!SelectedStudentIndex.HasValue) return;
-            if (SelectedStudentIndex == 0) return;
-            SelectedStudentIndex--;
-            SelectedStudent = Students[SelectedStudentIndex.Value];
+            Iterator.Previous();
         }
     }
 }
