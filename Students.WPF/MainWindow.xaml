@@ -18,29 +18,30 @@
 
         <Menu Grid.Row="0" Grid.Column="0">
             <MenuItem Header="File">
-                <MenuItem Header="Save..." />
-                <MenuItem Header="Load..." />
+                <MenuItem Header="New list" Click="NewList_OnClick" />
+                <MenuItem Header="Save list" Click="Save_OnClick" />
+                <MenuItem Header="Load list" />
             </MenuItem>
 
             <MenuItem Header="View">
-                <MenuItem Header="Next" />
-                <MenuItem Header="Previous" />
+                <MenuItem Header="Next student" />
+                <MenuItem Header="Previous student" />
             </MenuItem>
 
             <MenuItem Header="Students">
-                <MenuItem Header="Add" />
-                <MenuItem Header="Delete" />
+                <MenuItem Header="Add student" Click="Add_OnClick" />
+                <MenuItem Header="Delete student" />
             </MenuItem>
         </Menu>
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -73,7 +74,7 @@
                 <Button Content="Next" Grid.Column="1" />
             </Grid>
 
-            <TextBlock Text="Search" Grid.Row="2"/>
+            <TextBlock Text="Search" Grid.Row="2" />
 
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
