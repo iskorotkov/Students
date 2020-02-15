@@ -142,8 +142,10 @@ namespace Students.WPF
             RemoveMenuButton.IsEnabled = Iterator.IsSelected;
         }
 
-        private void SearchConditionBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void SearchCondition_OnChanged(object sender, EventArgs e)
         {
+            if (SearchConditionBox == null)
+                return;
             var query = SearchConditionBox.Text.Trim();
             if (query.Length == 0)
             {

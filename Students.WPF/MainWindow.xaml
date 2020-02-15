@@ -83,7 +83,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Name="FilterComboBox" SelectedIndex="0">
+                <ComboBox Name="FilterComboBox" SelectedIndex="0" SelectionChanged="SearchCondition_OnChanged">
                     <ComboBoxItem Content="First name" />
                     <ComboBoxItem Content="Second name" />
                     <ComboBoxItem Content="Faculty" />
@@ -91,7 +91,7 @@
 
                 <TextBlock Text=" = " Grid.Column="1" />
 
-                <TextBox Name="SearchConditionBox" Grid.Column="2" TextChanged="SearchConditionBox_OnTextChanged"/>
+                <TextBox Name="SearchConditionBox" Grid.Column="2" TextChanged="SearchCondition_OnChanged"/>
             </Grid>
         </Grid>
     </Grid>
