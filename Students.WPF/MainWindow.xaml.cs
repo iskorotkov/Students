@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
@@ -12,7 +13,7 @@ namespace Students.WPF
     {
         private List<Student> _students = new List<Student>();
         private Student _selectedStudent;
-        private StudentsSerializer _serializer = new StudentsSerializer();
+        private readonly StudentsSerializer _serializer = new StudentsSerializer();
 
         public MainWindow()
         {
@@ -94,8 +95,13 @@ namespace Students.WPF
             };
             var result = dialog.ShowDialog();
             if (result == null || !result.Value) return;
+            
             var file = dialog.FileName;
             _students = _serializer.Deserialize(file);
+            if (!_students.Any()) return;
+            
+            _selectedStudent = _students[0];
+            UpdateForm();
         }
     }
 }
