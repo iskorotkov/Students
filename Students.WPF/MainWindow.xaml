@@ -20,12 +20,12 @@
             <MenuItem Header="File">
                 <MenuItem Header="New list" Click="NewList_OnClick" />
                 <MenuItem Header="Save" Click="Save_OnClick" />
-                <MenuItem Header="Load" Click="Load_OnClick"/>
+                <MenuItem Header="Load" Click="Load_OnClick" />
             </MenuItem>
 
             <MenuItem Header="View">
-                <MenuItem Header="Next" Click="Next_OnClick"/>
-                <MenuItem Header="Previous" Click="Previous_OnClick"/>
+                <MenuItem Header="Next" Click="Next_OnClick" />
+                <MenuItem Header="Previous" Click="Previous_OnClick" />
             </MenuItem>
 
             <MenuItem Header="Students">
@@ -70,8 +70,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Content="Previous" Click="Previous_OnClick"/>
-                <Button Content="Next" Grid.Column="1" Click="Next_OnClick"/>
+                <Button Content="Next" Click="Next_OnClick" />
+                <Button Content="Previous" Grid.Column="1" Click="Previous_OnClick" />
             </Grid>
 
             <TextBlock Text="Search" Grid.Row="2" />
