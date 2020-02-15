@@ -19,11 +19,13 @@ namespace Students.WPF
             FirstNameBox.TextChanged += UpdateFirstName;
             SecondNameBox.TextChanged += UpdateSecondName;
             FacultyBox.TextChanged += UpdateFaculty;
+            SetFormEnabled(false);
         }
 
         private void NewList_OnClick(object sender, RoutedEventArgs e)
         {
             _students.Clear();
+            SetFormEnabled(false);
             ClearForm();
         }
 
@@ -31,6 +33,7 @@ namespace Students.WPF
         {
             _selectedStudent = new Student();
             _students.Add(_selectedStudent);
+            SetFormEnabled(true);
             UpdateForm();
         }
 
@@ -47,6 +50,13 @@ namespace Students.WPF
         private void UpdateFirstName(object sender, TextChangedEventArgs e)
         {
             _selectedStudent.FirstName = FirstNameBox.Text;
+        }
+
+        private void SetFormEnabled(bool enabled)
+        {
+            FirstNameBox.IsEnabled = enabled;
+            SecondNameBox.IsEnabled = enabled;
+            FacultyBox.IsEnabled = enabled;
         }
 
         private void ClearForm()
