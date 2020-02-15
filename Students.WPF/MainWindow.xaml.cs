@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using Microsoft.Win32;
 
 namespace Students.WPF
@@ -11,47 +11,74 @@ namespace Students.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Student> _students = new List<Student>();
         private Student _selectedStudent;
-        private readonly StudentsSerializer _serializer = new StudentsSerializer();
 
         public MainWindow()
         {
             InitializeComponent();
-            FirstNameBox.TextChanged += UpdateFirstName;
-            SecondNameBox.TextChanged += UpdateSecondName;
-            FacultyBox.TextChanged += UpdateFaculty;
-            SetFormEnabled(false);
+            FirstNameBox.TextChanged += (sender, args) => UpdateStudentFirstName();
+            SecondNameBox.TextChanged += (sender, args) => UpdateStudentSecondName();
+            FacultyBox.TextChanged += (sender, args) => UpdateStudentFaculty();
+
+            StudentSelected += s => SetFormEnabled(true);
+            StudentSelected += s => UpdateFormFields();
+
+            NoStudentsSelected += ClearFormFields;
+            NoStudentsSelected += () => SetFormEnabled(false);
+
+            SelectedStudent = null;
         }
+
+        private StudentsSerializer Serializer { get; } = new StudentsSerializer();
+        private List<Student> Students { get; set; }= new List<Student>();
+
+        private Student SelectedStudent
+        {
+            get => _selectedStudent;
+            set
+            {
+                _selectedStudent = value;
+                if (value == null)
+                    NoStudentsSelected?.Invoke();
+                else
+                    StudentSelected?.Invoke(value);
+            }
+        }
+
+        public event Action<Student> StudentSelected;
+        public event Action NoStudentsSelected;
 
         private void NewList_OnClick(object sender, RoutedEventArgs e)
         {
-            _students.Clear();
-            SetFormEnabled(false);
-            ClearForm();
+            Students.Clear();
+            SelectedStudent = null;
         }
 
         private void Add_OnClick(object sender, RoutedEventArgs e)
         {
-            _selectedStudent = new Student();
-            _students.Add(_selectedStudent);
-            SetFormEnabled(true);
-            UpdateForm();
+            SelectedStudent = new Student();
+            Students.Add(SelectedStudent);
         }
 
-        private void UpdateFaculty(object sender, TextChangedEventArgs e)
+        private void UpdateStudentFaculty()
         {
-            _selectedStudent.Faculty = FacultyBox.Text;
+            if (SelectedStudent == null)
+                return;
+            SelectedStudent.Faculty = FacultyBox.Text;
         }
 
-        private void UpdateSecondName(object sender, TextChangedEventArgs e)
+        private void UpdateStudentSecondName()
         {
-            _selectedStudent.SecondName = SecondNameBox.Text;
+            if (SelectedStudent == null)
+                return;
+            SelectedStudent.SecondName = SecondNameBox.Text;
         }
 
-        private void UpdateFirstName(object sender, TextChangedEventArgs e)
+        private void UpdateStudentFirstName()
         {
-            _selectedStudent.FirstName = FirstNameBox.Text;
+            if (SelectedStudent == null)
+                return;
+            SelectedStudent.FirstName = FirstNameBox.Text;
         }
 
         private void SetFormEnabled(bool enabled)
@@ -61,18 +88,18 @@ namespace Students.WPF
             FacultyBox.IsEnabled = enabled;
         }
 
-        private void ClearForm()
+        private void ClearFormFields()
         {
             FirstNameBox.Text = string.Empty;
             SecondNameBox.Text = string.Empty;
             FacultyBox.Text = string.Empty;
         }
 
-        private void UpdateForm()
+        private void UpdateFormFields()
         {
-            FirstNameBox.Text = _selectedStudent.FirstName;
-            SecondNameBox.Text = _selectedStudent.SecondName;
-            FacultyBox.Text = _selectedStudent.Faculty;
+            FirstNameBox.Text = SelectedStudent.FirstName;
+            SecondNameBox.Text = SelectedStudent.SecondName;
+            FacultyBox.Text = SelectedStudent.Faculty;
         }
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
@@ -82,9 +109,10 @@ namespace Students.WPF
                 Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             };
             var result = dialog.ShowDialog();
-            if (result == null || !result.Value) return;
+            if (result == null || !result.Value)
+                return;
             var file = dialog.FileName;
-            _serializer.Serialize(file, _students);
+            Serializer.Serialize(file, Students);
         }
 
         private void Load_OnClick(object sender, RoutedEventArgs e)
@@ -94,14 +122,12 @@ namespace Students.WPF
                 Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*",
             };
             var result = dialog.ShowDialog();
-            if (result == null || !result.Value) return;
-            
+            if (result == null || !result.Value)
+                return;
             var file = dialog.FileName;
-            _students = _serializer.Deserialize(file);
-            if (!_students.Any()) return;
-            
-            _selectedStudent = _students[0];
-            UpdateForm();
+            Students = Serializer.Deserialize(file);
+            if (Students.Any())
+                SelectedStudent = Students[0];
         }
     }
 }
