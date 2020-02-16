@@ -57,6 +57,7 @@ namespace Students.WPF
         public void Add(Student student)
         {
             Students.Add(student);
+            UnfilteredStudents?.Add(student);
             SelectedStudent = Students.Last();
         }
 
