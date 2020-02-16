@@ -6,9 +6,7 @@ namespace Students.WPF
 {
     public class StudentsIterator
     {
-        private int? _index;
         private List<Student> _students = new List<Student>();
-
         private List<Student>? UnfilteredStudents { get; set; }
 
         public List<Student> Students
@@ -17,7 +15,7 @@ namespace Students.WPF
             set
             {
                 _students = value;
-                Index = _students.Count > 0 ? 0 : (int?)null;
+                SelectedStudent = _students.Count > 0 ? _students[0] : null;
             }
         }
 
@@ -33,25 +31,24 @@ namespace Students.WPF
             UnfilteredStudents = null;
         }
 
-        public bool IsSelected => Index != null;
+        public bool IsSelected => SelectedStudent != null;
 
-        public Student? Selected => !Index.HasValue ? null : Students[Index.Value];
-
-        private int? Index
+        private Student? _selectedStudent;
+        public Student? SelectedStudent
         {
-            get => _index;
-            set
+            get => _selectedStudent;
+            private set
             {
-                _index = value;
+                _selectedStudent = value;
                 if (value != null)
-                    StudentSelected?.Invoke(Selected ?? throw new Exception());
+                    StudentSelected?.Invoke(_selectedStudent);
                 else
                     NoStudentSelected?.Invoke();
             }
         }
 
-        public bool CanSelectNext => Index != null && Index.Value < Students.Count - 1;
-        public bool CanSelectPrevious => Index != null && Index.Value > 0;
+        public bool CanSelectNext => SelectedStudent != null && !ReferenceEquals(SelectedStudent, Students.Last());
+        public bool CanSelectPrevious => SelectedStudent != null && !ReferenceEquals(SelectedStudent, Students.First());
 
         public event Action<Student>? StudentSelected;
         public event Action? NoStudentSelected;
@@ -60,42 +57,47 @@ namespace Students.WPF
         {
             var s = new Student();
             Students.Add(s);
-            Index = Students.Count - 1;
+            SelectedStudent = Students.Last();
         }
 
         public void Next()
         {
-            if (!Index.HasValue)
+            if (SelectedStudent == null)
                 return;
-            if (Index >= Students.Count - 1)
+            if (ReferenceEquals(SelectedStudent, Students.Last()))
                 return;
-            Index++;
+            var index = Students.IndexOf(SelectedStudent);
+            SelectedStudent = Students[index + 1];
         }
 
         public void Remove()
         {
-            if (!Index.HasValue)
+            if (SelectedStudent == null)
                 return;
-            Students.RemoveAt(Index.Value);
+            var index = Students.IndexOf(SelectedStudent);
+            Students.Remove(SelectedStudent);
+            UnfilteredStudents?.Remove(SelectedStudent);
             if (Students.Count == 0)
-                Index = null;
+                SelectedStudent = null;
             else
-                Index = Index >= Students.Count ? Students.Count - 1 : Index;
+                SelectedStudent = index >= Students.Count ? Students.Last() : Students[index];
         }
 
         public void Previous()
         {
-            if (!Index.HasValue)
+            if (SelectedStudent == null)
                 return;
-            if (Index <= 0)
+            if (ReferenceEquals(SelectedStudent, Students.First()))
                 return;
-            Index--;
+            var index = Students.IndexOf(SelectedStudent);
+            SelectedStudent = Students[index - 1];
         }
 
         public void Clear()
         {
             Students.Clear();
-            Index = null;
+            UnfilteredStudents = null;
+            SelectedStudent = null;
         }
     }
 }

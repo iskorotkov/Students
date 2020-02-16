@@ -28,6 +28,7 @@ namespace Students.WPF
             Iterator.Clear();
             UpdateNavButtonsState();
             UpdateRemoveButtonState();
+            SearchConditionBox.Clear();
         }
 
         private void Add_OnClick(object sender, RoutedEventArgs e)
@@ -39,20 +40,20 @@ namespace Students.WPF
 
         private void UpdateStudentFaculty(object sender, TextChangedEventArgs e)
         {
-            if (Iterator.Selected != null)
-                Iterator.Selected.Faculty = FacultyBox.Text;
+            if (Iterator.SelectedStudent != null)
+                Iterator.SelectedStudent.Faculty = FacultyBox.Text;
         }
 
         private void UpdateStudentSecondName(object sender, TextChangedEventArgs e)
         {
-            if (Iterator.Selected != null)
-                Iterator.Selected.SecondName = SecondNameBox.Text;
+            if (Iterator.SelectedStudent != null)
+                Iterator.SelectedStudent.SecondName = SecondNameBox.Text;
         }
 
         private void UpdateStudentFirstName(object sender, TextChangedEventArgs e)
         {
-            if (Iterator.Selected != null)
-                Iterator.Selected.FirstName = FirstNameBox.Text;
+            if (Iterator.SelectedStudent != null)
+                Iterator.SelectedStudent.FirstName = FirstNameBox.Text;
         }
 
         private void SetFormEnabled(bool enabled)
@@ -71,11 +72,11 @@ namespace Students.WPF
 
         private void UpdateFormFields()
         {
-            if (Iterator.Selected == null)
+            if (Iterator.SelectedStudent == null)
                 return;
-            FirstNameBox.Text = Iterator.Selected.FirstName;
-            SecondNameBox.Text = Iterator.Selected.SecondName;
-            FacultyBox.Text = Iterator.Selected.Faculty;
+            FirstNameBox.Text = Iterator.SelectedStudent.FirstName;
+            SecondNameBox.Text = Iterator.SelectedStudent.SecondName;
+            FacultyBox.Text = Iterator.SelectedStudent.Faculty;
         }
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
@@ -104,6 +105,7 @@ namespace Students.WPF
             Iterator.Students = Serializer.Deserialize(file);
             UpdateNavButtonsState();
             UpdateRemoveButtonState();
+            SearchConditionBox.Clear();
         }
 
         private void Next_OnClick(object sender, RoutedEventArgs e)
