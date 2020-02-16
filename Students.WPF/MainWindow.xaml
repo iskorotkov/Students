@@ -85,7 +85,8 @@
 
                         <TextBlock Text="Year" />
                         <TextBox Name="DegreeYear" Grid.Row="0" Grid.Column="1"
-                                 TextChanged="DegreeYear_OnTextChanged" />
+                                 TextChanged="DegreeYear_OnTextChanged"
+                                 PreviewTextInput="DegreeYear_OnPreviewTextInput"/>
 
                         <TextBlock Text="Domain" Grid.Row="1" Grid.Column="0" />
                         <TextBox Name="DegreeDomain" Grid.Row="1" Grid.Column="1"

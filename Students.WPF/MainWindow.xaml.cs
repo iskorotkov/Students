@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Win32;
 
 namespace Students.WPF
@@ -186,17 +187,13 @@ namespace Students.WPF
         private void DegreeYear_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (Iterator.SelectedStudent is Master master)
-            {
                 master.Degree.Year = int.Parse(DegreeYear.Text);
-            }
         }
 
         private void DegreeDomain_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (Iterator.SelectedStudent is Master master)
-            {
                 master.Degree.Domain = DegreeDomain.Text;
-            }
         }
 
         private void SetBachelorFormState(Student student)
@@ -215,6 +212,11 @@ namespace Students.WPF
 
             DegreeYear.Text = master?.Degree.Year.ToString() ?? "";
             DegreeDomain.Text = master?.Degree.Domain ?? "";
+        }
+
+        private void DegreeYear_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = int.TryParse(DegreeYear.Text, out _);
         }
     }
 }
