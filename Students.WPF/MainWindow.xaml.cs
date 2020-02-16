@@ -13,10 +13,6 @@ namespace Students.WPF
         public MainWindow()
         {
             InitializeComponent();
-            FirstNameBox.TextChanged += (_, __) => UpdateStudentFirstName();
-            SecondNameBox.TextChanged += (_, __) => UpdateStudentSecondName();
-            FacultyBox.TextChanged += (_, __) => UpdateStudentFaculty();
-
             Iterator.StudentSelected += _ => SetFormEnabled(true);
             Iterator.StudentSelected += _ => UpdateFormFields();
 
@@ -41,19 +37,19 @@ namespace Students.WPF
             UpdateRemoveButtonState();
         }
 
-        private void UpdateStudentFaculty()
+        private void UpdateStudentFaculty(object sender, TextChangedEventArgs e)
         {
             if (Iterator.Selected != null)
                 Iterator.Selected.Faculty = FacultyBox.Text;
         }
 
-        private void UpdateStudentSecondName()
+        private void UpdateStudentSecondName(object sender, TextChangedEventArgs e)
         {
             if (Iterator.Selected != null)
                 Iterator.Selected.SecondName = SecondNameBox.Text;
         }
 
-        private void UpdateStudentFirstName()
+        private void UpdateStudentFirstName(object sender, TextChangedEventArgs e)
         {
             if (Iterator.Selected != null)
                 Iterator.Selected.FirstName = FirstNameBox.Text;
@@ -153,11 +149,12 @@ namespace Students.WPF
             }
             else
             {
+                query = query.ToLower();
                 var pred = FilterComboBox.SelectedIndex switch
                 {
-                    0 => new Predicate<Student>(s => s.FirstName == query),
-                    1 => new Predicate<Student>(s => s.SecondName == query),
-                    2 => new Predicate<Student>(s => s.Faculty == query),
+                    0 => new Predicate<Student>(s => s.FirstName.ToLower().Contains(query)),
+                    1 => new Predicate<Student>(s => s.SecondName.ToLower().Contains(query)),
+                    2 => new Predicate<Student>(s => s.Faculty.ToLower().Contains(query)),
                     _ => throw new InvalidOperationException()
                 };
                 Iterator.ApplyFilter(pred);

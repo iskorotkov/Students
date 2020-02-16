@@ -30,7 +30,7 @@
 
             <MenuItem Header="Students">
                 <MenuItem Header="Add" Click="Add_OnClick" />
-                <MenuItem IsEnabled="False" Name="RemoveMenuButton" Header="Remove" Click="Remove_OnClick"/>
+                <MenuItem IsEnabled="False" Name="RemoveMenuButton" Header="Remove" Click="Remove_OnClick" />
             </MenuItem>
         </Menu>
 
@@ -55,13 +55,16 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="First name: " Grid.Row="0" Grid.Column="0" />
-                <TextBox IsEnabled="False" Name="FirstNameBox" Grid.Row="0" Grid.Column="1" />
+                <TextBox IsEnabled="False" Name="FirstNameBox" Grid.Row="0" Grid.Column="1"
+                         TextChanged="UpdateStudentFirstName" />
 
                 <TextBlock Text="Second name: " Grid.Row="1" Grid.Column="0" />
-                <TextBox IsEnabled="False" Name="SecondNameBox" Grid.Row="1" Grid.Column="1" />
+                <TextBox IsEnabled="False" Name="SecondNameBox" Grid.Row="1" Grid.Column="1"
+                         TextChanged="UpdateStudentSecondName" />
 
                 <TextBlock Text="Faculty: " Grid.Row="2" Grid.Column="0" />
-                <TextBox IsEnabled="False" Name="FacultyBox" Grid.Row="2" Grid.Column="1" />
+                <TextBox IsEnabled="False" Name="FacultyBox" Grid.Row="2" Grid.Column="1"
+                         TextChanged="UpdateStudentFaculty" />
             </Grid>
 
             <Grid Grid.Row="1">
@@ -84,14 +87,14 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Name="FilterComboBox" SelectedIndex="0" SelectionChanged="SearchCondition_OnChanged">
-                    <ComboBoxItem Content="First name" />
-                    <ComboBoxItem Content="Second name" />
-                    <ComboBoxItem Content="Faculty" />
+                    <ComboBoxItem  Name="FirstNameFilter" Content="First name" />
+                    <ComboBoxItem Name="SecondNameFilter" Content="Second name" />
+                    <ComboBoxItem Name="FacultyFilter" Content="Faculty" />
                 </ComboBox>
 
                 <TextBlock Text=" = " Grid.Column="1" />
 
-                <TextBox Name="SearchConditionBox" Grid.Column="2" TextChanged="SearchCondition_OnChanged"/>
+                <TextBox Name="SearchConditionBox" Grid.Column="2" TextChanged="SearchCondition_OnChanged" />
             </Grid>
         </Grid>
     </Grid>
