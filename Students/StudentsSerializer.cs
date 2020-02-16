@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace Students.WPF
+namespace Students
 {
     public class StudentsSerializer
     {
