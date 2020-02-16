@@ -65,7 +65,7 @@ namespace Students.WPF
             if (SelectedStudent == null)
                 return;
             if (ReferenceEquals(SelectedStudent, Students.Last()))
-                return;
+                throw new InvalidOperationException("Can't go past last student in list");
             var index = Students.IndexOf(SelectedStudent);
             SelectedStudent = Students[index + 1];
         }
@@ -73,7 +73,7 @@ namespace Students.WPF
         public void Remove()
         {
             if (SelectedStudent == null)
-                return;
+                throw new InvalidOperationException("Can't delete users if it wasn't selected");
             var index = Students.IndexOf(SelectedStudent);
             Students.Remove(SelectedStudent);
             UnfilteredStudents?.Remove(SelectedStudent);
@@ -88,7 +88,7 @@ namespace Students.WPF
             if (SelectedStudent == null)
                 return;
             if (ReferenceEquals(SelectedStudent, Students.First()))
-                return;
+                throw new InvalidOperationException("Can't go before first student in list");
             var index = Students.IndexOf(SelectedStudent);
             SelectedStudent = Students[index - 1];
         }
