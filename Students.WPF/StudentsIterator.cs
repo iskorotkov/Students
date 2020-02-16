@@ -34,6 +34,7 @@ namespace Students.WPF
         public bool IsSelected => SelectedStudent != null;
 
         private Student? _selectedStudent;
+
         public Student? SelectedStudent
         {
             get => _selectedStudent;
@@ -103,6 +104,13 @@ namespace Students.WPF
         {
             var index = Students.IndexOf(SelectedStudent);
             Students[index] = newStudent;
+
+            if (UnfilteredStudents != null)
+            {
+                index = UnfilteredStudents.IndexOf(SelectedStudent);
+                UnfilteredStudents[index] = newStudent;
+            }
+
             SelectedStudent = newStudent;
         }
     }
