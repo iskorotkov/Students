@@ -165,9 +165,9 @@ namespace Students.WPF
                 query = query.ToLower();
                 var pred = FilterComboBox.SelectedIndex switch
                 {
-                    0 => new Predicate<Student>(s => s.FirstName.ToLower().Contains(query)),
-                    1 => new Predicate<Student>(s => s.SecondName.ToLower().Contains(query)),
-                    2 => new Predicate<Student>(s => s.Faculty.ToLower().Contains(query)),
+                    0 => new Predicate<Student>(s => s?.FirstName?.ToLower().Contains(query) ?? false),
+                    1 => new Predicate<Student>(s => s?.SecondName?.ToLower().Contains(query) ?? false),
+                    2 => new Predicate<Student>(s => s?.Faculty?.ToLower().Contains(query) ?? false),
                     _ => throw new InvalidOperationException()
                 };
                 Iterator.ApplyFilter(pred);

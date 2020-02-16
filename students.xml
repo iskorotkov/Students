@@ -10,8 +10,8 @@
     </Degree>
   </Student>
   <Student xsi:type="Bachelor">
-    <FirstName>Zuev</FirstName>
-    <SecondName>Oleg</SecondName>
+    <FirstName>Oleg</FirstName>
+    <SecondName>Zuev</SecondName>
     <Faculty>Arts</Faculty>
   </Student>
 </ArrayOfStudent>
