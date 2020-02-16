@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -25,7 +26,7 @@ namespace Students.CommandLine
                 Faculty = "Math",
                 Degree = new Degree
                 {
-                    Year = 2022,
+                    GraduationDate = DateTime.Today,
                     Domain = "Programming"
                 }
             };

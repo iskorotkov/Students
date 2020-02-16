@@ -5,6 +5,6 @@ namespace Students
     [Serializable]
     public class Master : Student
     {
-        public Degree Degree { get; set; }
+        public Degree Degree { get; set; } = new Degree();
     }
 }

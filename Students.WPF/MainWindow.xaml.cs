@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using Microsoft.Win32;
 
 namespace Students.WPF
@@ -78,7 +77,7 @@ namespace Students.WPF
             FirstNameBox.Clear();
             SecondNameBox.Clear();
             FacultyBox.Clear();
-            DegreeYear.Clear();
+            DegreeGraduationDate.SelectedDate = DateTime.Today;
             DegreeDomain.Clear();
             DegreeForm.Visibility = Visibility.Collapsed;
             MakeMasterButton.Visibility = Visibility.Collapsed;
@@ -184,15 +183,15 @@ namespace Students.WPF
             Iterator.ReplaceSelected(bachelor.MakeMaster());
         }
 
-        private void DegreeYear_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void DegreeYear_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Iterator.SelectedStudent is Master master)
-                master.Degree.Year = int.Parse(DegreeYear.Text);
+            if (Iterator.SelectedStudent is Master master && master.Degree != null)
+                master.Degree.GraduationDate = DegreeGraduationDate.SelectedDate;
         }
 
         private void DegreeDomain_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (Iterator.SelectedStudent is Master master)
+            if (Iterator.SelectedStudent is Master master && master.Degree != null)
                 master.Degree.Domain = DegreeDomain.Text;
         }
 
@@ -210,13 +209,8 @@ namespace Students.WPF
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            DegreeYear.Text = master?.Degree.Year.ToString() ?? "";
-            DegreeDomain.Text = master?.Degree.Domain ?? "";
-        }
-
-        private void DegreeYear_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = int.TryParse(DegreeYear.Text, out _);
+            DegreeGraduationDate.SelectedDate = master?.Degree?.GraduationDate;
+            DegreeDomain.Text = master?.Degree?.Domain ?? "";
         }
     }
 }

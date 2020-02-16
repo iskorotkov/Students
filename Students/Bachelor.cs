@@ -15,7 +15,7 @@ namespace Students
                 Degree = new Degree
                 {
                     Domain = Faculty,
-                    Year = DateTime.Today.Year
+                    GraduationDate = DateTime.Today
                 }
             };
         }

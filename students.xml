@@ -5,7 +5,7 @@
     <SecondName>Korotkov</SecondName>
     <Faculty>Math</Faculty>
     <Degree>
-      <Year>2022</Year>
+      <GraduationDate>2022-07-31T00:00:00</GraduationDate>
       <Domain>Math</Domain>
     </Degree>
   </Student>
