@@ -1,33 +1,17 @@
 <?xml version="1.0"?>
 <ArrayOfStudent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Student>
-    <FirstName>dgsdsvdsvdsvsdv</FirstName>
-    <SecondName>vdvsdvvdsv</SecondName>
-    <Faculty>vdsvsdvsdvsdvsdvsdvsvsd</Faculty>
+  <Student xsi:type="Master">
+    <FirstName>Ivan</FirstName>
+    <SecondName>Korotkov</SecondName>
+    <Faculty>Math</Faculty>
+    <Degree>
+      <GraduationDate>2022-07-31T00:00:00</GraduationDate>
+      <Domain>Math</Domain>
+    </Degree>
   </Student>
-  <Student>
-    <FirstName>sgsfgs</FirstName>
-    <SecondName>dsdgs</SecondName>
-    <Faculty>vsdssvv</Faculty>
-  </Student>
-  <Student>
-    <FirstName>vsdvsdvsdv000</FirstName>
-    <SecondName>vwdssdvds---</SecondName>
-    <Faculty>vsdvsdvdsvsd</Faculty>
-  </Student>
-  <Student>
-    <FirstName>ee</FirstName>
-    <SecondName />
-    <Faculty>ee</Faculty>
-  </Student>
-  <Student>
-    <FirstName>ee</FirstName>
-    <SecondName>fwefw</SecondName>
-    <Faculty>fwefwe</Faculty>
-  </Student>
-  <Student>
-    <FirstName>fe</FirstName>
-    <SecondName>vdvsdvvdsv</SecondName>
-    <Faculty>vdvsdvvdsv</Faculty>
+  <Student xsi:type="Bachelor">
+    <FirstName>Zuev</FirstName>
+    <SecondName>Oleg</SecondName>
+    <Faculty>Arts</Faculty>
   </Student>
 </ArrayOfStudent>

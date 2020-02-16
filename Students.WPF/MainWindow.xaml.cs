@@ -14,7 +14,9 @@ namespace Students.WPF
         {
             InitializeComponent();
             Iterator.StudentSelected += _ => SetFormEnabled(true);
-            Iterator.StudentSelected += _ => UpdateFormFields();
+            Iterator.StudentSelected += UpdateFormFields;
+            Iterator.StudentSelected += SetBachelorFormState;
+            Iterator.StudentSelected += SetMasterFormState;
 
             Iterator.NoStudentSelected += ClearFormFields;
             Iterator.NoStudentSelected += () => SetFormEnabled(false);
@@ -31,9 +33,16 @@ namespace Students.WPF
             SearchConditionBox.Clear();
         }
 
-        private void Add_OnClick(object sender, RoutedEventArgs e)
+        private void AddBachelor_OnClick(object sender, RoutedEventArgs e)
         {
-            Iterator.New();
+            Iterator.Add(new Bachelor());
+            UpdateNavButtonsState();
+            UpdateRemoveButtonState();
+        }
+
+        private void AddMaster_OnClick(object sender, RoutedEventArgs e)
+        {
+            Iterator.Add(new Master());
             UpdateNavButtonsState();
             UpdateRemoveButtonState();
         }
@@ -65,18 +74,20 @@ namespace Students.WPF
 
         private void ClearFormFields()
         {
-            FirstNameBox.Text = string.Empty;
-            SecondNameBox.Text = string.Empty;
-            FacultyBox.Text = string.Empty;
+            FirstNameBox.Clear();
+            SecondNameBox.Clear();
+            FacultyBox.Clear();
+            DegreeGraduationDate.SelectedDate = DateTime.Today;
+            DegreeDomain.Clear();
+            DegreeForm.Visibility = Visibility.Collapsed;
+            MakeMasterButton.Visibility = Visibility.Collapsed;
         }
 
-        private void UpdateFormFields()
+        private void UpdateFormFields(Student student)
         {
-            if (Iterator.SelectedStudent == null)
-                return;
-            FirstNameBox.Text = Iterator.SelectedStudent.FirstName;
-            SecondNameBox.Text = Iterator.SelectedStudent.SecondName;
-            FacultyBox.Text = Iterator.SelectedStudent.Faculty;
+            FirstNameBox.Text = student.FirstName;
+            SecondNameBox.Text = student.SecondName;
+            FacultyBox.Text = student.Faculty;
         }
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
@@ -161,8 +172,45 @@ namespace Students.WPF
                 };
                 Iterator.ApplyFilter(pred);
             }
+
             UpdateNavButtonsState();
             UpdateRemoveButtonState();
+        }
+
+        private void MakeMasterButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var bachelor = (Bachelor) Iterator.SelectedStudent;
+            Iterator.ReplaceSelected(bachelor.MakeMaster());
+        }
+
+        private void DegreeYear_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Iterator.SelectedStudent is Master master && master.Degree != null)
+                master.Degree.GraduationDate = DegreeGraduationDate.SelectedDate;
+        }
+
+        private void DegreeDomain_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Iterator.SelectedStudent is Master master && master.Degree != null)
+                master.Degree.Domain = DegreeDomain.Text;
+        }
+
+        private void SetBachelorFormState(Student student)
+        {
+            MakeMasterButton.Visibility = student is Bachelor
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        private void SetMasterFormState(Student student)
+        {
+            var master = student as Master;
+            DegreeForm.Visibility = master != null
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+            DegreeGraduationDate.SelectedDate = master?.Degree?.GraduationDate;
+            DegreeDomain.Text = master?.Degree?.Domain ?? "";
         }
     }
 }

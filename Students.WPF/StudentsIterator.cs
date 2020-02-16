@@ -34,6 +34,7 @@ namespace Students.WPF
         public bool IsSelected => SelectedStudent != null;
 
         private Student? _selectedStudent;
+
         public Student? SelectedStudent
         {
             get => _selectedStudent;
@@ -53,10 +54,10 @@ namespace Students.WPF
         public event Action<Student>? StudentSelected;
         public event Action? NoStudentSelected;
 
-        public void New()
+        public void Add(Student student)
         {
-            var s = new Student();
-            Students.Add(s);
+            Students.Add(student);
+            UnfilteredStudents?.Add(student);
             SelectedStudent = Students.Last();
         }
 
@@ -98,6 +99,20 @@ namespace Students.WPF
             Students.Clear();
             UnfilteredStudents = null;
             SelectedStudent = null;
+        }
+
+        public void ReplaceSelected(Student newStudent)
+        {
+            var index = Students.IndexOf(SelectedStudent);
+            Students[index] = newStudent;
+
+            if (UnfilteredStudents != null)
+            {
+                index = UnfilteredStudents.IndexOf(SelectedStudent);
+                UnfilteredStudents[index] = newStudent;
+            }
+
+            SelectedStudent = newStudent;
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace Students
 {
-    [Serializable]
+    [Serializable, XmlInclude(typeof(Bachelor)), XmlInclude(typeof(Master))]
     public class Student
     {
         public string FirstName { get; set; }

@@ -6,7 +6,13 @@ namespace Students
 {
     public class StudentsSerializer
     {
-        private readonly XmlSerializer _serializer = new XmlSerializer(typeof(List<Student>));
+        private readonly XmlSerializer _serializer = new XmlSerializer(typeof(List<Student>),
+            new[]
+            {
+                typeof(Student),
+                typeof(Bachelor),
+                typeof(Master)
+            });
 
         public void Serialize(string filepath, List<Student> students)
         {
