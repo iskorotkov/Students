@@ -39,7 +39,7 @@
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -58,20 +58,20 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="First name: " Grid.Row="0" Grid.Column="0" />
-                <TextBox IsEnabled="False" Name="FirstNameBox" Grid.Row="0" Grid.Column="1"
+                <TextBlock Text="First name: " Grid.Row="0" Grid.Column="0" Margin="16,8,8,2" />
+                <TextBox IsEnabled="False" Name="FirstNameBox" Grid.Row="0" Grid.Column="1" Margin="8,8,16,2"
                          TextChanged="UpdateStudentFirstName" />
 
-                <TextBlock Text="Second name: " Grid.Row="1" Grid.Column="0" />
-                <TextBox IsEnabled="False" Name="SecondNameBox" Grid.Row="1" Grid.Column="1"
+                <TextBlock Text="Second name: " Grid.Row="1" Grid.Column="0" Margin="16,2,8,2" />
+                <TextBox IsEnabled="False" Name="SecondNameBox" Grid.Row="1" Grid.Column="1" Margin="8,2,16,2"
                          TextChanged="UpdateStudentSecondName" />
 
-                <TextBlock Text="Faculty: " Grid.Row="2" Grid.Column="0" />
-                <TextBox IsEnabled="False" Name="FacultyBox" Grid.Row="2" Grid.Column="1"
+                <TextBlock Text="Faculty: " Grid.Row="2" Grid.Column="0" Margin="16,2,8,8" />
+                <TextBox IsEnabled="False" Name="FacultyBox" Grid.Row="2" Grid.Column="1" Margin="8,2,16,8"
                          TextChanged="UpdateStudentFaculty" />
 
                 <GroupBox Name="DegreeForm" Header="Degree" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
-                          Visibility="Collapsed">
+                          Visibility="Collapsed" Margin="8,2,8,2">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -83,18 +83,18 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="Year" />
-                        <DatePicker Name="DegreeGraduationDate" Grid.Row="0" Grid.Column="1"
+                        <TextBlock Text="Graduation date: " Margin="8,8,8,2" />
+                        <DatePicker Name="DegreeGraduationDate" Grid.Row="0" Grid.Column="1" Margin="8,8,8,2"
                                     SelectedDateChanged="DegreeYear_OnSelectedDateChanged" />
 
-                        <TextBlock Text="Domain" Grid.Row="1" Grid.Column="0" />
-                        <TextBox Name="DegreeDomain" Grid.Row="1" Grid.Column="1"
+                        <TextBlock Text="Domain: " Grid.Row="1" Grid.Column="0" Margin="8,2,8,8" />
+                        <TextBox Name="DegreeDomain" Grid.Row="1" Grid.Column="1" Margin="8,2,8,8"
                                  TextChanged="DegreeDomain_OnTextChanged" />
                     </Grid>
                 </GroupBox>
 
                 <Button Name="MakeMasterButton" Content="Make master" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
-                        Visibility="Collapsed" Click="MakeMasterButton_OnClick" />
+                        Visibility="Collapsed" Click="MakeMasterButton_OnClick" Margin="16,4,16,4" />
             </Grid>
 
             <Grid Grid.Row="1">
@@ -103,29 +103,33 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button IsEnabled="False" Content="Previous" Name="PreviousStudentButton" Click="Previous_OnClick" />
-                <Button IsEnabled="False" Content="Next" Name="NextStudentButton" Grid.Column="1" Click="Next_OnClick" />
+                <Button IsEnabled="False" Content="Previous" Name="PreviousStudentButton" Click="Previous_OnClick"
+                        Margin="8,2,8,8" />
+                <Button IsEnabled="False" Content="Next" Name="NextStudentButton" Grid.Column="1" Click="Next_OnClick"
+                        Margin="8,2,8,8" />
             </Grid>
 
-            <TextBlock Text="Search" Grid.Row="2" />
+            <GroupBox Header="Search" Grid.Row="2" Margin="8,2,8,2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                    <ComboBox Name="FilterComboBox" SelectedIndex="0" SelectionChanged="SearchCondition_OnChanged"
+                              Margin="8,8,0,8">
+                        <ComboBoxItem Content="First name" />
+                        <ComboBoxItem Content="Second name" />
+                        <ComboBoxItem Content="Faculty" />
+                    </ComboBox>
 
-                <ComboBox Name="FilterComboBox" SelectedIndex="0" SelectionChanged="SearchCondition_OnChanged">
-                    <ComboBoxItem Name="FirstNameFilter" Content="First name" />
-                    <ComboBoxItem Name="SecondNameFilter" Content="Second name" />
-                    <ComboBoxItem Name="FacultyFilter" Content="Faculty" />
-                </ComboBox>
+                    <TextBlock Text=" = " Grid.Column="1" Margin="2,8,2,8" />
 
-                <TextBlock Text=" = " Grid.Column="1" />
-
-                <TextBox Name="SearchConditionBox" Grid.Column="2" TextChanged="SearchCondition_OnChanged" />
-            </Grid>
+                    <TextBox Name="SearchConditionBox" Grid.Column="2" TextChanged="SearchCondition_OnChanged"
+                             Margin="0,8,8,8" />
+                </Grid>
+            </GroupBox>
         </Grid>
     </Grid>
 </Window>
