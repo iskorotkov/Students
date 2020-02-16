@@ -53,10 +53,9 @@ namespace Students.WPF
         public event Action<Student>? StudentSelected;
         public event Action? NoStudentSelected;
 
-        public void New()
+        public void Add(Student student)
         {
-            var s = new Student();
-            Students.Add(s);
+            Students.Add(student);
             SelectedStudent = Students.Last();
         }
 
@@ -98,6 +97,13 @@ namespace Students.WPF
             Students.Clear();
             UnfilteredStudents = null;
             SelectedStudent = null;
+        }
+
+        public void ReplaceSelected(Student newStudent)
+        {
+            var index = Students.IndexOf(SelectedStudent);
+            Students[index] = newStudent;
+            SelectedStudent = newStudent;
         }
     }
 }

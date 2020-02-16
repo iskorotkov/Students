@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <ArrayOfStudent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Student xsi:type="Bachelor">
-    <FirstName>Ivan</FirstName>
-    <SecondName>Korotkov</SecondName>
-    <Faculty>Math</Faculty>
-  </Student>
   <Student xsi:type="Master">
     <FirstName>Ivan</FirstName>
     <SecondName>Korotkov</SecondName>
     <Faculty>Math</Faculty>
     <Degree>
       <Year>2022</Year>
-      <Domain>Programming</Domain>
+      <Domain>Math</Domain>
     </Degree>
+  </Student>
+  <Student xsi:type="Bachelor">
+    <FirstName>Zuev</FirstName>
+    <SecondName>Oleg</SecondName>
+    <Faculty>Arts</Faculty>
   </Student>
 </ArrayOfStudent>
